@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Money Manager</string>
+    <string name="description_hint">Enter Description Here</string>
+    <string name="item_description_label_text">Item Description:</string>
+    <string name="price_label_hint">Enter Price Here</string>
+    <string name="item_price_label_text">Item Price: $</string>
+    <string name="item_name_hint">Enter Name Here</string>
+    <string name="item_name_label_text">Item Name:</string>
+    <string name="homepage_header_text">Did You Save Today?</string>
+    <string name="resisted_button_text">Resisted</string>
+    <string name="financial_goals_button_text">Financial Goals</string>
+    <string name="financial_history_button_text">Financial History</string>
+    <string name="bought_button">Bought</string>
+    <string name="delete_button">Delete</string>
+    <string name="indulged_button_text">Indulged</string>
+</resources>

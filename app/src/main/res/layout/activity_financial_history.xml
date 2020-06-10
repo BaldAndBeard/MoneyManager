@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FinancialHistory">
+
+    <LinearLayout
+        android:id="@+id/financial_history_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:text="Items Resisted: " />
+
+        <TextView
+            android:id="@+id/total_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:text="Money Saved: $" />
+
+        <TextView
+            android:id="@+id/total_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_names"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_weight=".25"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/financial_history_header">
+
+
+        <TextView
+            android:id="@+id/item_name_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/item_name_label_text"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_name_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/item_name_header"
+            app:layout_constraintTop_toBottomOf="@+id/item_name_header" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_prices"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_weight=".25"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/linear_names"
+        app:layout_constraintTop_toBottomOf="@id/financial_history_header">
+
+        <TextView
+            android:id="@+id/item_price_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/item_price_label_text"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_price_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="$"
+            app:layout_constraintStart_toStartOf="@+id/item_price_header"
+            app:layout_constraintTop_toBottomOf="@+id/item_price_header" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_dates"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight=".50"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linear_prices"
+        app:layout_constraintTop_toBottomOf="@id/financial_history_header">
+
+
+        <TextView
+            android:id="@+id/item_date_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Date Resisted: "
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_date_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/item_date_header"
+            app:layout_constraintTop_toBottomOf="@+id/item_date_header" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
