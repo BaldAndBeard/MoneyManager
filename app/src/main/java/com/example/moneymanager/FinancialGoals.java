@@ -89,9 +89,18 @@ public class FinancialGoals extends AppCompatActivity {
                 goal_name_textview.setText("Goal: " + goal_name);
                 goal_name_textview.setTextSize(24);
                 goal_name_textview.setTextColor(getResources().getColor(R.color.White));
-                goal_price_textview.setText("Price: $" + goal_price);
+
+
+                // Set price as a value of saved over total price
+                if (totalSum < Float.parseFloat(goal_price)) {
+                    goal_price_textview.setText("Price: $" + totalSum + "/" + "$" + goal_price);
+                    goal_price_textview.setTextColor(getResources().getColor(R.color.White));
+                } else if (totalSum >= Float.parseFloat(goal_price)) {
+                    goal_price_textview.setText("Price: $" + goal_price + "/" + "$" + goal_price);
+                    goal_price_textview.setTextColor(getResources().getColor(R.color.Green));
+                }
+
                 goal_price_textview.setTextSize(24);
-                goal_price_textview.setTextColor(getResources().getColor(R.color.White));
 
 
                 // Create LinearLayout(VERTICAL) to house horizontal LinearLayout
@@ -259,9 +268,18 @@ public class FinancialGoals extends AppCompatActivity {
             goal_name_textview.setText("Goal: " + goal_name);
             goal_name_textview.setTextSize(24);
             goal_name_textview.setTextColor(getResources().getColor(R.color.White));
-            goal_price_textview.setText("Price: $" + goal_price);
+
+            // Set price as a value of saved over total price
+            if (totalSum < Float.parseFloat(goal_price)) {
+                goal_price_textview.setText("Price: $" + totalSum + "/" + goal_price);
+                goal_price_textview.setTextColor(getResources().getColor(R.color.White));
+            } else if (totalSum >= Float.parseFloat(goal_price)) {
+                goal_price_textview.setText("Price: $" + goal_price + "/" + goal_price);
+                goal_price_textview.setTextColor(getResources().getColor(R.color.Green));
+            }
+
             goal_price_textview.setTextSize(24);
-            goal_price_textview.setTextColor(getResources().getColor(R.color.White));
+
 
 
             // Create LinearLayout(VERTICAL) to house horizontal LinearLayout
