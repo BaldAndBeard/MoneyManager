@@ -2,9 +2,16 @@ package com.example.moneymanager;
 
 
 import android.content.SharedPreferences;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -22,6 +29,9 @@ public class FinancialHistory extends AppCompatActivity {
     public String itemDatesLong;
     public float totalSum;
     public String totalSumString;
+    public TextView displayTotalSum;
+    public LinearLayout linear_goals;
+    GradientDrawable border = new GradientDrawable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +39,7 @@ public class FinancialHistory extends AppCompatActivity {
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         setContentView(R.layout.activity_financial_history);
 
-        //Considers itemDatesLong to be null. It sees the other two.
+        ////Load Shared Preferences
         itemNamesLong = mPreferences.getString("namesKey", itemNamesLong);
         itemPricesLong = mPreferences.getString("pricesKey", itemPricesLong);
         itemDatesLong = mPreferences.getString("datesKey", itemDatesLong);
@@ -51,41 +61,109 @@ public class FinancialHistory extends AppCompatActivity {
             itemPrices = new LinkedList<>(Arrays.asList(priceArray));
             itemDates = new LinkedList<>(Arrays.asList(datesArray));
 
-            TextView dateTextView = findViewById(R.id.item_date_list);
-            String displayItemDates = (itemDates.get(0));
-            dateTextView.setText(displayItemDates);
 
-            for (int i = 1; i < itemDates.size(); i++) {
-                displayItemDates += "\n" + (itemDates.get(i));
-                dateTextView.setText(displayItemDates);
+            totalSum = mPreferences.getFloat("totalSumKey", totalSum);
+            if (mPreferences.getString("totalSumStringKey", totalSumString) != null) {
+                totalSumString = Float.toString(totalSum);
+            } else {
+                totalSumString = "$0";
             }
 
-            TextView nameTextView = findViewById(R.id.item_name_list);
-            String displayItemNames = (itemNames.get(0));
-            nameTextView.setText(displayItemNames);
+            displayTotalSum = findViewById(R.id.displayTotalSum);
+            displayTotalSum.setText(totalSumString);
 
-            for (int i = 1; i < itemNames.size(); i++) {
-                displayItemNames += "\n" + (itemNames.get(i));
-                nameTextView.setText(displayItemNames);
+
+
+            //Use Shared Preferences to recreate user input layout
+            if (itemNames.size() > 0) {
+                for (int i = 0; i < itemNames.size(); i++) {
+                    //Purpose: Create TextViews to show variables
+                    TextView goal_price_textview = new TextView(this);
+                    TextView goal_name_textview = new TextView(this);
+                    TextView goal_date_textview = new TextView(this);
+                    goal_name_textview.setPadding(20, 10, 20, 10);
+                    goal_price_textview.setPadding(20, 10, 20, 10);
+                    final Button deleteGoal = new Button(this);
+                    deleteGoal.setText(R.string.delete_button);
+                    deleteGoal.setTextSize(12);
+                    deleteGoal.setHeight(8);
+
+                    // Set deleteGoal button to an icon
+                    /*deleteGoal.setImageDrawable(getDrawable(R.drawable.ic_action_name));
+                    deleteGoal.setScaleX((float) 0.5);
+                    deleteGoal.setScaleY((float) 0.5);*/
+
+
+                    //Purpose: Take in user input and set as variables
+                    final String item_name = itemNames.get(i);
+                    final String item_price = itemPrices.get(i);
+                    final String item_date = itemDates.get(i);
+
+                    goal_name_textview.setText("Name: " + item_name);
+                    goal_name_textview.setTextSize(12);
+                    goal_name_textview.setTextColor(getResources().getColor(R.color.White));
+                    goal_price_textview.setText("Price: $" + item_price);
+                    goal_price_textview.setTextSize(12);
+                    goal_price_textview.setTextColor(getResources().getColor(R.color.White));
+                    goal_date_textview.setText("Date: " + item_date);
+                    goal_date_textview.setTextSize(12);
+                    goal_date_textview.setTextColor(getResources().getColor(R.color.White));
+
+
+                    // Create LinearLayout(VERTICAL) to house horizontal LinearLayout
+                    linear_goals = findViewById(R.id.linear_goals);
+
+
+                    // Create RelativeLayout to house TextViews and assign said TextViews
+                    final LinearLayout relativelayout_goal_child = new LinearLayout(FinancialHistory.this);
+                    relativelayout_goal_child.setBackgroundColor(getResources().getColor(R.color.LightSlateGray));
+
+                    //Add Children to relative_goal_child
+                    relativelayout_goal_child.addView(goal_name_textview);
+                    relativelayout_goal_child.addView(goal_price_textview);
+                    relativelayout_goal_child.addView(goal_date_textview);
+                    relativelayout_goal_child.addView(deleteGoal);
+
+                    border.setColor(getResources().getColor(R.color.Gray)); //white background
+                    border.setStroke(5, getResources().getColor(R.color.White)); //black border with full opacity
+                    relativelayout_goal_child.setBackground(border);
+
+
+
+                    // Delete old history to never have more than 20 at a time.
+                    /*if (linear_goals.getChildCount() >= 20) {
+                        linear_goals.removeViewAt(0);
+                        for (i = 0; i < linear_goals.getChildCount(); i++) {
+                            linear_goals.getChildAt(i).setId(i);
+                        }
+                    }*/
+
+                    // Add new relativelayout_goal_child to linear_goals
+                    relativelayout_goal_child.setId(linear_goals.getChildCount());
+                    linear_goals.addView(relativelayout_goal_child);
+
+                    //Create an onClick handle for delete button. Works.
+                    deleteGoal.setOnClickListener(new View.OnClickListener() {
+                                                      @Override
+                                                      public void onClick(final View v) {
+                                                          itemNames.remove(relativelayout_goal_child.getId());
+                                                          itemPrices.remove(relativelayout_goal_child.getId());
+                                                          itemDates.remove(relativelayout_goal_child.getId());
+                                                          linear_goals.removeViewAt(relativelayout_goal_child.getId());
+                                                          for (int i = 0; i < linear_goals.getChildCount(); i++) {
+                                                              linear_goals.getChildAt(i).setId(i);
+                                                          }
+                                                      }
+                                                  }
+                    );
+
+                }
+
+
             }
 
-            TextView priceTextView = findViewById(R.id.item_price_list);
-            String displayItemPrices = "$" + (itemPrices.get(0));
-            priceTextView.setText(displayItemPrices);
 
-            for (int i = 1; i < itemPrices.size(); i++) {
-                displayItemPrices += "\n" + "$" + (itemPrices.get(i));
-                priceTextView.setText(displayItemPrices);
-            }
-
-            TextView displayTotalSum = findViewById(R.id.total_sum);
-            displayTotalSum.setText(Float.toString(totalSum));
-
-            String totalItems = Integer.toString(itemNames.size());
-            TextView displayTotalItems = findViewById(R.id.total_count);
-            displayTotalItems.setText(totalItems);
         }
-
     }
 
     //Save Arrays. Not Working
